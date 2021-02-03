@@ -987,7 +987,9 @@ window.__require = function e(t, n, o) {
                         scale: .9
                     }).union().repeatForever().start()
                 }, t.prototype.update = function(e) {}, t.prototype.adsButtonFunc2 = function() {
+                    window.location.href = "https://space.bilibili.com/442655565/dynamic"
                 }, t.prototype.bannerButtonFunc = function() {
+                    window.location.href = "https://space.bilibili.com/442655565/dynamic"
                 }, t.prototype.ShowFailedUi = function(e, t) {
                     var n = this;
                     this.scheduleOnce(function() {
