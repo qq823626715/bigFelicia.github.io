@@ -66,9 +66,6 @@ window.boot = function() {
         // Loading splash scene
         var splash = document.getElementById('splash');
         // var progressBar = splash.querySelector('.progress-bar span');
-
-
-
         cc.loader.onProgress = function(completedCount, totalCount, item) {
 
             loadData.completedCount = completedCount;
@@ -89,30 +86,8 @@ window.boot = function() {
                 }
             }
             loadingNum++;
-            // if(loadingBool){
-            // 	var loadintT = document.getElementById("loadingText")
-            // }
-            // var percent = 100 * completedCount / totalCount;
-            // if(loadingBool && loadingNum >= 1){
-            // 	   console.log("dskpi",loadingNum);
-            // 	   loadintT.innerHTML = 'loading......' + parseInt(percent)  + '%';
-            // 	   if(percent.toFixed(0) >= 100){
-
-            // 		   loadingBool = false;
-            // 		   loadintT.remove();
-            // 	   }
-            // }
-            // loadingNum ++;
-
-            // var percent = 100 * completedCount / totalCount;
-            // if (progressBar) {
-            // progressBar.style.width = percent.toFixed(2) + '%';
-            // }
-
-
         };
         splash.style.display = 'block';
-        // progressBar.style.width = '0%';
 
         cc.director.once(cc.Director.EVENT_AFTER_SCENE_LAUNCH, function() {
             splash.style.display = 'none';
@@ -155,45 +130,15 @@ window.boot = function() {
             }
         }
 
-        // function loadScene(launchScene) {
-        // cc.director.loadScene(launchScene, null,
-        // function () {
-        // if (cc.sys.isBrowser) {
-        // // show canvas
-        // var canvas = document.getElementById('GameCanvas');
-        // canvas.style.visibility = '';
-        // var div = document.getElementById('GameDiv');
-        // if (div) {
-        // div.style.backgroundImage = '';
-        // }
-        // }
-        // cc.loader.onProgress = null;
-        // console.log('Success to load scene: ' + launchScene);
-        // }
-        // );
-
-        // }
-
         var launchScene = settings.launchScene;
-
-        // load scene
-        // loadScene(launchScene);
-
         var canvas;
 
         if (cc.sys.isBrowser) {
             canvas = document.getElementById('GameCanvas');
         }
         var launchScene = settings.launchScene;
-        console.log("landscape,", launchScene);
         var MainManger = __require("MainManage");
         MainManger.init(launchScene, cc.sys.isBrowser, canvas.style.visibility);
-
-
-
-
-
-
     };
 
     // jsList
@@ -238,28 +183,29 @@ window.boot = function() {
 };
 
 // main.js is qqplay and jsb platform entry file, so we must leave platform init code here
-if (false) {
-    BK.Script.loadlib('GameRes://src/settings.js');
-    BK.Script.loadlib();
-    BK.Script.loadlib('GameRes://libs/qqplay-downloader.js');
+// if (false) {
+    // BK.Script.loadlib('GameRes://src/settings.js');
+    // BK.Script.loadlib();
+    // BK.Script.loadlib('GameRes://libs/qqplay-downloader.js');
 
-    var ORIENTATIONS = {
-        'portrait': 1,
-        'landscape left': 2,
-        'landscape right': 3
-    };
-    BK.Director.screenMode = ORIENTATIONS[window._CCSettings.orientation];
-    initAdapter();
-    cc.game.once(cc.game.EVENT_ENGINE_INITED, function() {
-        initRendererAdapter();
-    });
+    // var ORIENTATIONS = {
+    //     'portrait': 1,
+    //     'landscape left': 2,
+    //     'landscape right': 3
+    // };
+    // BK.Director.screenMode = ORIENTATIONS[window._CCSettings.orientation];
+    // initAdapter();
+    // cc.game.once(cc.game.EVENT_ENGINE_INITED, function() {
+    //     initRendererAdapter();
+    // });
 
-    qqPlayDownloader.REMOTE_SERVER_ROOT = "";
-    var prevPipe = cc.loader.md5Pipe || cc.loader.assetLoader;
-    cc.loader.insertPipeAfter(prevPipe, qqPlayDownloader);
+    // qqPlayDownloader.REMOTE_SERVER_ROOT = "";
+    // var prevPipe = cc.loader.md5Pipe || cc.loader.assetLoader;
+    // cc.loader.insertPipeAfter(prevPipe, qqPlayDownloader);
 
-    window.boot();
-} else if (window.jsb) {
+    // window.boot();
+// } else if (window.jsb) {
+if (window.jsb) {
 
     var isRuntime = (typeof loadRuntime === 'function');
     if (isRuntime) {
