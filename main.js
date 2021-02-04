@@ -12,12 +12,17 @@ window.boot = function() {
 
     if (!settings.debug) {
         var uuids = settings.uuids;
-
+        // 原始资源
         var rawAssets = settings.rawAssets;
+        // 资源类型
         var assetTypes = settings.assetTypes;
+        // 实际原始资源 绑定清空？
         var realRawAssets = settings.rawAssets = {};
+        // 还原rawAssets key为uuid， 以及type
         for (var mount in rawAssets) {
+            // entries: JSON 入口
             var entries = rawAssets[mount];
+            // realEntries: JSON 实际入口
             var realEntries = realRawAssets[mount] = {};
             for (var id in entries) {
                 var entry = entries[id];
@@ -28,9 +33,11 @@ window.boot = function() {
                 }
                 // retrieve uuid
                 realEntries[uuids[id] || id] = entry;
+                // 最后形成 json uuid：entry{Array}
             }
         }
 
+        // 还原scenes uuid
         var scenes = settings.scenes;
         for (var i = 0; i < scenes.length; ++i) {
             var scene = scenes[i];
@@ -38,7 +45,8 @@ window.boot = function() {
                 scene.uuid = uuids[scene.uuid];
             }
         }
-
+        // 打包后的资源
+        // 还原packedAssets里面的数字味uuids里的uuid
         var packedAssets = settings.packedAssets;
         for (var packId in packedAssets) {
             var packedIds = packedAssets[packId];
@@ -48,7 +56,7 @@ window.boot = function() {
                 }
             }
         }
-
+        // 子包 同，还原子包中的数字，改为uuids
         var subpackages = settings.subpackages;
         for (var subId in subpackages) {
             var uuidArray = subpackages[subId].uuids;
@@ -63,7 +71,7 @@ window.boot = function() {
     }
 
     function setLoadingDisplay() {
-        // Loading splash scene
+        // Loading 飞溅场景
         var splash = document.getElementById('splash');
         // var progressBar = splash.querySelector('.progress-bar span');
         cc.loader.onProgress = function(completedCount, totalCount, item) {
@@ -122,7 +130,7 @@ window.boot = function() {
                 cc.view.enableAutoFullScreen(false);
             }
 
-            // Limit downloading max concurrent task to 2,
+            // Limit downloading max concurrent task to 2,（设置并发数2个）
             // more tasks simultaneously may cause performance draw back on some android system / browsers.
             // You can adjust the number based on your own test result, you have to set it before any loading process to take effect.
             if (cc.sys.isBrowser && cc.sys.os === cc.sys.OS_ANDROID) {
@@ -130,13 +138,13 @@ window.boot = function() {
             }
         }
 
+        // 运行场景
         var launchScene = settings.launchScene;
         var canvas;
 
         if (cc.sys.isBrowser) {
             canvas = document.getElementById('GameCanvas');
         }
-        var launchScene = settings.launchScene;
         var MainManger = __require("MainManage");
         MainManger.init(launchScene, cc.sys.isBrowser, canvas.style.visibility);
     };
@@ -144,19 +152,19 @@ window.boot = function() {
     // jsList
     var jsList = settings.jsList;
 
-    if (false) {
-        BK.Script.loadlib();
+    // if (false) {
+    //     BK.Script.loadlib();
+    // } else {
+    var bundledScript = settings.debug ? 'src/project.dev.js' : 'src/project.js';
+    if (jsList) {
+        jsList = jsList.map(function(x) {
+            return 'src/' + x;
+        });
+        jsList.push(bundledScript);
     } else {
-        var bundledScript = settings.debug ? 'src/project.dev.js' : 'src/project.js';
-        if (jsList) {
-            jsList = jsList.map(function(x) {
-                return 'src/' + x;
-            });
-            jsList.push(bundledScript);
-        } else {
-            jsList = [bundledScript];
-        }
+        jsList = [bundledScript];
     }
+    // }
 
     var option = {
         id: 'GameCanvas',
